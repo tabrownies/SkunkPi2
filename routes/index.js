@@ -14,7 +14,7 @@ router.post('/on', function(res,req){
 });
 router.post('/off', function(res,req){
   LED.writeSync(0);
-  res.send('off');
+  res.sendStatus(200);
 });
 
 module.exports = router;
