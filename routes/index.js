@@ -1,19 +1,20 @@
 var express = require('express');
 var router = express.Router();
+var Gpio = require('onoff').Gpio;
 var cors = require('cors');
-const Raspi = require('raspi-io').RaspiIO;
-const five = require('johnny-five');
-const board = new five.board({
-  io: new Raspi()
-});
-board.on("ready", () => {
-  const led = new five.Pin(7);
-  led('high');
-})
 router.use(cors());
 /* GET home page. */
+var LED = new Gpio(4, 'out');
 router.get('/armenian', function(req, res, next) {
   res.send(true);
+});
+router.post('/on', function(res,req){
+  LED.writeSync(1);
+  res.send('on');
+});
+router.post('/off', function(res,req){
+  LED.writeSync(0);
+  res.send('off');
 });
 
 module.exports = router;
